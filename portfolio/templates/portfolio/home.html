@@ -1,0 +1,204 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="hero" id="home">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-inner">
+        <p class="eyebrow">Hello, I am</p>
+        <h1>{{ site_profile.full_name }}</h1>
+        <p class="hero-title">{{ site_profile.title }}</p>
+        <p class="hero-copy">{{ site_profile.tagline }}</p>
+        <div class="hero-actions">
+            <a class="btn btn-accent" href="#projects">View My Projects</a>
+            <a class="btn btn-outline-light" href="#contact">Contact Me</a>
+        </div>
+        <p class="hero-meta">
+            <i class="bi bi-geo-alt" aria-hidden="true"></i> {{ site_profile.location }}
+            <span class="dot" aria-hidden="true"></span>
+            Python · Django · Web Development
+        </p>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">About</p>
+            <h2>A focused Python developer in the making</h2>
+        </div>
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-4">
+                <div class="profile-card">
+                    {% if site_profile.profile_image %}
+                        <img src="{{ site_profile.profile_image.url }}" alt="Portrait of {{ site_profile.full_name }}">
+                    {% else %}
+                        <img src="{% static 'portfolio/img/profile-placeholder.svg' %}" alt="Developer profile illustration for {{ site_profile.full_name }}">
+                    {% endif %}
+                    <div class="profile-meta">
+                        <h3>{{ site_profile.full_name }}</h3>
+                        <p>{{ site_profile.title }}</p>
+                        <p class="mb-0">{{ site_profile.location }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="content-card">
+                    <p>{{ site_profile.about }}</p>
+                    <ul class="about-points">
+                        <li>B.Tech student with an Information Technology / Computer Science-oriented profile</li>
+                        <li>Interested in Python, Django, web development, and software engineering</li>
+                        <li>Comfortable building structured Django apps with models, views, templates, and admin</li>
+                    </ul>
+                    <a class="btn btn-accent" href="{% url 'portfolio:resume' %}">
+                        <i class="bi bi-download" aria-hidden="true"></i> Download Resume
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" id="skills">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Skills</p>
+            <h2>Tools I use to build software</h2>
+        </div>
+        <div class="row g-4">
+            {% for skill in skills %}
+                <div class="col-md-6 col-lg-4">
+                    {% include "portfolio/includes/skill_card.html" %}
+                </div>
+            {% empty %}
+                <p>Skills will appear here after they are added in Django Admin.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" id="projects">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Projects</p>
+            <h2>Selected work</h2>
+        </div>
+        <div class="row g-4">
+            {% for project in projects %}
+                <div class="col-md-6 col-xl-4">
+                    {% include "portfolio/includes/project_card.html" %}
+                </div>
+            {% empty %}
+                <p>Projects will appear here after they are added in Django Admin.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" id="education">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Education</p>
+            <h2>Academic background</h2>
+        </div>
+        <div class="timeline">
+            {% for item in education_list %}
+                <article class="timeline-card">
+                    <p class="timeline-years">{{ item.start_year }} — {{ item.end_year }}</p>
+                    <h3>{{ item.degree }}{% if item.field_of_study %} in {{ item.field_of_study }}{% endif %}</h3>
+                    <p class="timeline-place">{{ item.institution }}</p>
+                    {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+                </article>
+            {% empty %}
+                <p>Education details will appear here after they are added in Django Admin.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" id="certifications">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Certifications</p>
+            <h2>Learning and achievements</h2>
+        </div>
+        <div class="row g-4">
+            {% for item in certifications %}
+                <div class="col-md-6 col-lg-4">
+                    <article class="cert-card h-100">
+                        <p class="cert-date">{{ item.date_earned|default:"Ongoing" }}</p>
+                        <h3>{{ item.title }}</h3>
+                        <p class="cert-issuer">{{ item.issuer }}</p>
+                        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+                        {% if item.credential_url %}
+                            <a href="{{ item.credential_url }}" target="_blank" rel="noopener noreferrer">View credential</a>
+                        {% endif %}
+                    </article>
+                </div>
+            {% empty %}
+                <p>Certifications will appear here after they are added in Django Admin.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" id="contact">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Contact</p>
+            <h2>Let’s work together</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="content-card">
+                    <p>Use the form to send a message. Submissions are validated and stored so they can be reviewed in Django Admin.</p>
+                    <p class="mb-2"><i class="bi bi-envelope" aria-hidden="true"></i> <a href="mailto:{{ site_profile.email }}">{{ site_profile.email }}</a></p>
+                    {% if site_profile.github_url %}
+                        <p class="mb-2"><i class="bi bi-github" aria-hidden="true"></i> <a href="{{ site_profile.github_url }}" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+                    {% endif %}
+                    {% if site_profile.linkedin_url %}
+                        <p class="mb-0"><i class="bi bi-linkedin" aria-hidden="true"></i> <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-7">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form method="post" novalidate class="contact-form">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="id_name">Name</label>
+                            {{ form.name }}
+                            {{ form.name.errors }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="id_email">Email</label>
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="id_subject">Subject</label>
+                            {{ form.subject }}
+                            {{ form.subject.errors }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="id_message">Message</label>
+                            {{ form.message }}
+                            {{ form.message.errors }}
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-accent">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

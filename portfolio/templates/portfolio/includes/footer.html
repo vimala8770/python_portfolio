@@ -1,0 +1,35 @@
+<footer class="site-footer">
+    <div class="container">
+        <div class="row gy-3 align-items-center">
+            <div class="col-md-6">
+                <p class="footer-name mb-1">{{ site_profile.full_name }}</p>
+                <p class="footer-copy mb-0">&copy; {% now "Y" %} {{ site_profile.full_name }}. All rights reserved.</p>
+            </div>
+            <div class="col-md-6">
+                <ul class="footer-links">
+                    {% if site_profile.github_url %}
+                    <li>
+                        <a href="{{ site_profile.github_url }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <i class="bi bi-github" aria-hidden="true"></i> GitHub
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site_profile.linkedin_url %}
+                    <li>
+                        <a href="{{ site_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <i class="bi bi-linkedin" aria-hidden="true"></i> LinkedIn
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site_profile.email %}
+                    <li>
+                        <a href="mailto:{{ site_profile.email }}" aria-label="Email">
+                            <i class="bi bi-envelope" aria-hidden="true"></i> Email
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,11 @@
+<article class="skill-card h-100">
+    <div class="skill-icon" aria-hidden="true">
+        <i class="bi {{ skill.icon }}"></i>
+    </div>
+    <h3>{{ skill.name }}</h3>
+    <p class="skill-category">{{ skill.category }}</p>
+    <div class="progress" role="progressbar" aria-label="{{ skill.name }} proficiency" aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: {{ skill.proficiency }}%;"></div>
+    </div>
+    <p class="skill-level">{{ skill.proficiency }}%</p>
+</article>
