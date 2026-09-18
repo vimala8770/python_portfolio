@@ -1,15 +1,2 @@
-venv/
-.env
-db.sqlite3
-__pycache__/
-*.py[cod]
-*.sqlite3
-staticfiles/
-media/profile/
-media/projects/
-media/resume/
-*.log
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
+# Created by venv; see https://docs.python.org/3/library/venv.html
+*
